@@ -2,20 +2,22 @@
 
 
 
-void parse_arguments(char **argv)
+void parse_arguments(char **argv, t_restaurant restaurant)
 {
-    (void)argv;
+    
 }
 
 
 
 int main(int argc, char **argv)
 {
-    (void)argv;
-    if(argc < 5 || argc < 6)
+    t_restaurant restaurant;
+
+    if(argc != 6)
     {
         printf("hola");
     }
+    parse_arguments(argv, restaurant);
 
     return(0);
 }
