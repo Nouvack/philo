@@ -20,8 +20,8 @@ NAME    := philo
 CC      := cc 
 CFLAGS  :=  -Wall -Wextra -Werror -g3
 SRC_DIR := src/
-SRC := $(SRC_DIR)main.c
-OBJ     := $(SRC:.c=.o)
+SRC := $(SRC_DIR)main.c $(SRC_DIR)/tools/tools_str.c $(SRC_DIR)/tools/tools_placeholder.c $(SRC_DIR)/tools/tools_split.c  $(SRC_DIR)/tools/tools_parse.c
+OBJ     := $(SRC:.c=.o) 
 HEADERS := -I .
 
 
