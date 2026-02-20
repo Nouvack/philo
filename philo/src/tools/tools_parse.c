@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tools_parse.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nsantand <nsantand@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/20 16:42:22 by nsantand          #+#    #+#             */
+/*   Updated: 2026/02/20 18:51:38 by nsantand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #include "philo.h"
 
@@ -59,4 +71,45 @@ int	ft_atoi(const char *nptr)
 		i++;
 	}
 	return (sig * res);
+}
+int j = 0;
+
+void *printas(void *str)
+{
+	for(int i=0; i< 100000; i++)
+	{
+		j++;
+	}
+	printf("Este es el valor de i: %d\n", j);
+	printf("Este es el valor de str: %s\n", (char* )str);
+	return(NULL);
+}
+
+
+bool parse_arguments(char **argv)
+{
+	char **nums;
+	pthread_t hilo;
+	pthread_t hilo2;
+	
+
+	
+    nums = check_number(argv);
+	if(!nums)
+		return(false);
+	//funcion de convertir el array de string de numeros a int
+	size_t i = 0;
+	while(i < ft_arraylen(nums))
+	{
+		printf("este es el nummero: %s\n",  nums[i]);
+		i++;
+	}
+	pthread_create(&hilo, NULL, printas, "hola");
+	pthread_create(&hilo2, NULL, printas, "hola");
+	//aprender de los mutex
+	pthread_join(hilo, NULL);
+	pthread_join(hilo2, NULL);
+	
+	
+	return(true);
 }
