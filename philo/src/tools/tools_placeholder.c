@@ -47,3 +47,31 @@ void	ft_putendl_fd(char *s, int fd)
 	}
 	write(fd, "\n", 1);
 }
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void	*i;
+	size_t	total_size;
+
+	if (size != 0 && nmemb > SIZE_MAX / size)
+		return (NULL);
+	total_size = nmemb * size;
+	i = malloc(total_size);
+	if (i == NULL)
+		return (NULL);
+	ft_bzero(i, total_size);
+	return (i);
+}
+void	ft_bzero(void *s, size_t n)
+{
+	unsigned char	*s2;
+	size_t			i;
+
+	s2 = (unsigned char *)s;
+	i = 0;
+	while (i < n)
+	{
+		s2[i] = 0;
+		i++;
+	}
+}

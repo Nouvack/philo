@@ -6,7 +6,7 @@
 /*   By: nsantand <nsantand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 15:14:20 by nsantand          #+#    #+#             */
-/*   Updated: 2026/02/20 16:59:38 by nsantand         ###   ########.fr       */
+/*   Updated: 2026/02/23 18:01:33 by nsantand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,30 @@
 # include <unistd.h>
 #include <stdbool.h>
 #include <pthread.h>
+# include <stdint.h>
+
+typedef enum e_state
+{
+	EATING,
+    THINKING,
+    SLEEPING,
+    DIE,
+}	t_state;
 typedef struct s_restaurant
 {
-    size_t number_of_philosophers;
-    size_t time_to_die;
-    size_t time_to_eat;
-    size_t time_to_sleep;
-    size_t number_of_timmes_each_philosopher_must_eat;
+    int number_of_philosophers;
+    int time_to_die;
+    int time_to_eat;
+    int time_to_sleep;
+    int number_of_timmes_each_philosopher_must_eat;
 } t_restaurant;
 
 typedef struct s_philos
 {
-    char* name;
+    int ids;
+    t_state state;
+    struct s_philos *next;
+    
 } t_philos;
 
 typedef struct s_table
@@ -58,4 +70,7 @@ size_t	ft_arraylen(char **array);size_t	ft_arraylen(char **array);
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
+void	*ft_calloc(size_t nmemb, size_t size);
+void	ft_bzero(void *s, size_t n);
+void	place_node(t_philos **lst, t_philos *new);
 #endif  

@@ -6,72 +6,14 @@
 /*   By: nsantand <nsantand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 16:42:22 by nsantand          #+#    #+#             */
-/*   Updated: 2026/02/20 18:51:38 by nsantand         ###   ########.fr       */
+/*   Updated: 2026/02/23 18:25:08 by nsantand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "philo.h"
 
-static long	aux_atoll(long long sig)
-{
-	if (sig == -1)
-		return (LONG_MIN);
-	else
-		return (LONG_MAX);
-}
 
-long	ft_atoll(const char *nptr)
-{
-	long	i;
-	long	sig;
-	long	res;
-
-	i = 0;
-	sig = 1;
-	res = 0;
-	while ((nptr[i] >= 9 && nptr[i] <= 13) || (nptr[i] == ' '))
-		i++;
-	if (nptr[i] == '+' || nptr[i] == '-')
-	{
-		if (nptr[i] == '-')
-			sig = -1;
-		i++;
-	}
-	while (nptr[i] >= '0' && nptr[i] <= '9')
-	{
-		if (res > (LONG_MAX / 10) || (res == (LONG_MAX / 10) && (nptr[i]
-					- '0') > (LONG_MAX % 10)))
-			return (aux_atoll(sig));
-		res = res * 10 + (nptr[i] - '0');
-		i++;
-	}
-	return (sig * res);
-}
-int	ft_atoi(const char *nptr)
-{
-	int		i;
-	int		sig;
-	int		res;
-
-	i = 0;
-	sig = 1;
-	res = 0;
-	while ((nptr[i] >= 9 && nptr[i] <= 13) || (nptr[i] == ' '))
-		i++;
-	if (nptr[i] == '+' || nptr[i] == '-')
-	{
-		if (nptr[i] == '-')
-			sig = -1;
-		i++;
-	}
-	while (nptr[i] >= '0' && nptr[i] <= '9')
-	{
-		res = res * 10 + (nptr[i] - '0');
-		i++;
-	}
-	return (sig * res);
-}
 int j = 0;
 
 void *printas(void *str)
@@ -84,31 +26,94 @@ void *printas(void *str)
 	printf("Este es el valor de str: %s\n", (char* )str);
 	return(NULL);
 }
+t_restaurant create_restaurant(char **nums)
+{
+	t_restaurant restaurant;
+
+	restaurant.number_of_philosophers = ft_atoi(nums[0]);
+	restaurant.time_to_die = ft_atoi(nums[1]);
+	restaurant.time_to_eat = ft_atoi(nums[2]);
+	restaurant.time_to_sleep = ft_atoi(nums[3]);
+	if(ft_arraylen(nums) == 5)
+		restaurant.number_of_timmes_each_philosopher_must_eat = ft_atoi(nums[4]);
+	else if (ft_arraylen(nums) == 4)
+		restaurant.number_of_timmes_each_philosopher_must_eat = -1;
+	return(restaurant);
+	
+}
+
+void	*create_node(t_philos **lst, int content)
+{
+	t_philos	*new;
+
+	new = ft_calloc(1, sizeof(t_philos));
+	if (!new)
+		return (NULL);
+	new->ids = content;
+	new->next = NULL;
+	place_node(lst, new);
+	return ((void *)0);
+}
+
+void	place_node(t_philos **lst, t_philos *new)
+{
+	t_philos	*current;
+
+	if (lst == NULL || new == NULL)
+		return ;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	current = *lst;
+	while (current->next != NULL)
+		current = current->next;
+	current->next = new;
+}
+
+
+t_philos *create_philos(int number_philos)
+{
+	t_philos *philos;
+	int i;
+	
+	i = 0;
+	philos = NULL;
+	while(i != number_philos)
+	{
+		create_node(&philos, i);
+		i++;
+	}
+	return(philos);
+}
 
 
 bool parse_arguments(char **argv)
 {
 	char **nums;
-	pthread_t hilo;
-	pthread_t hilo2;
-	
+	t_philos *philos;
+	t_restaurant restaurant;
 
 	
     nums = check_number(argv);
 	if(!nums)
 		return(false);
-	//funcion de convertir el array de string de numeros a int
-	size_t i = 0;
-	while(i < ft_arraylen(nums))
-	{
-		printf("este es el nummero: %s\n",  nums[i]);
-		i++;
-	}
-	pthread_create(&hilo, NULL, printas, "hola");
-	pthread_create(&hilo2, NULL, printas, "hola");
-	//aprender de los mutex
-	pthread_join(hilo, NULL);
-	pthread_join(hilo2, NULL);
+	restaurant = create_restaurant(nums);
+	philos = create_philos(restaurant.number_of_philosophers);
+
+
+	// size_t i = 0;
+	// while(i < ft_arraylen(nums))
+	// {
+	// 	printf("este es el nummero: %s\n",  nums[i]);
+	// 	i++;
+	// }
+	// pthread_create(&hilo, NULL, printas, "hola");
+	// pthread_create(&hilo2, NULL, printas, "hola");
+	// //aprender de los mutex
+	// pthread_join(hilo, NULL);
+	// pthread_join(hilo2, NULL);
 	
 	
 	return(true);

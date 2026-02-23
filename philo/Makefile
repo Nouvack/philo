@@ -18,9 +18,9 @@ DEF_COLOR = \033[0;39m
 
 NAME    := philo
 CC      := cc 
-CFLAGS  :=  -Wall -Wextra -Werror -fsanitize=thread -g3
+CFLAGS  :=  -Wall -Wextra -Werror -g3
 SRC_DIR := src/
-SRC := $(SRC_DIR)main.c $(SRC_DIR)/tools/tools_str.c $(SRC_DIR)/tools/tools_placeholder.c $(SRC_DIR)/tools/tools_split.c  $(SRC_DIR)/tools/tools_parse.c $(SRC_DIR)/tools/tools_check.c
+SRC := $(SRC_DIR)main.c $(SRC_DIR)/tools/tools_str.c $(SRC_DIR)/tools/tools_placeholder.c $(SRC_DIR)/tools/tools_split.c  $(SRC_DIR)/tools/tools_parse.c $(SRC_DIR)/tools/tools_check.c $(SRC_DIR)/tools/tools_aux_parse.c
 OBJ     := $(SRC:.c=.o) 
 HEADERS := -I .
 
@@ -44,7 +44,7 @@ fclean: clean
 re: fclean all
 
 valgrind: re
-	valgrind -s \
+	valgrind  --leak-check=full -s \
 		./$(NAME)
 
 .PHONY: all libft clean fclean re valgrind
