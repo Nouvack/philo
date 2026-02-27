@@ -6,7 +6,7 @@
 /*   By: nsantand <nsantand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 16:42:03 by nsantand          #+#    #+#             */
-/*   Updated: 2026/02/20 16:42:19 by nsantand         ###   ########.fr       */
+/*   Updated: 2026/02/27 18:19:38 by nsantand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,9 @@ char	**check_long(char *str)
 	while (nums[i] != NULL)
 	{
 		number = ft_atoll(nums[i]);
-		if (number > INT_MAX || number < INT_MIN)
+		if(nums[i + 1] == NULL && (number >= -1  && number < INT_MAX))
+			break;
+		if (nums[0] > 200 ||number > INT_MAX || number < 0)
 			return (free_array(nums), NULL);
 		j = i + 1;
 		i++;

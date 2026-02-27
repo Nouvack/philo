@@ -6,7 +6,7 @@
 /*   By: nsantand <nsantand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 15:14:20 by nsantand          #+#    #+#             */
-/*   Updated: 2026/02/23 18:01:33 by nsantand         ###   ########.fr       */
+/*   Updated: 2026/02/27 18:54:45 by nsantand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,38 +19,42 @@
 # include <limits.h>
 # include <stdlib.h> 
 # include <unistd.h>
-#include <stdbool.h>
-#include <pthread.h>
+# include <stdbool.h>
+# include <pthread.h>
 # include <stdint.h>
-
+# include <sys/time.h>
 typedef enum e_state
 {
 	EATING,
     THINKING,
     SLEEPING,
-    DIE,
+    DEAD,
 }	t_state;
-typedef struct s_restaurant
+typedef struct s_table 
 {
+    long    start_time;
     int number_of_philosophers;
     int time_to_die;
     int time_to_eat;
     int time_to_sleep;
     int number_of_timmes_each_philosopher_must_eat;
-} t_restaurant;
+    pthread_mutex_t *forks;
+    pthread_mutex_t print_mutex;
+
+} t_table;
 
 typedef struct s_philos
 {
     int ids;
-    t_state state;
-    struct s_philos *next;
-    
+    pthread_t thread;
+    int number_eat;
+    long last_meal;
+    pthread_mutex_t *left_fork;
+    pthread_mutex_t *right_fork;
+    t_table *table;
 } t_philos;
 
-typedef struct s_table
-{
-    char* name;
-} t_table;
+
 bool parse_arguments(char **argv);
 bool aux_exit_check_number(char **argv, int i, int j);
 char    *ft_strdup(const char *s);

@@ -6,7 +6,7 @@
 /*   By: nsantand <nsantand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 16:54:11 by nsantand          #+#    #+#             */
-/*   Updated: 2026/02/23 14:56:59 by nsantand         ###   ########.fr       */
+/*   Updated: 2026/02/26 15:33:32 by nsantand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,11 @@ int main(int argc, char **argv)
         return(1);
     }
     if(!parse_arguments(argv))
-		return(1);
+		{
+      printf("ERROR");
+      return(1);
+    }
+    
 
     return(0);
 }
