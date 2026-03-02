@@ -6,7 +6,7 @@
 /*   By: nsantand <nsantand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 14:17:32 by nsantand          #+#    #+#             */
-/*   Updated: 2026/02/23 14:17:42 by nsantand         ###   ########.fr       */
+/*   Updated: 2026/03/02 18:21:16 by nsantand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,26 @@ int	ft_atoi(const char *nptr)
 		i++;
 	}
 	return (sig * res);
+}
+
+size_t	ft_arraylen(char **array)
+{
+	size_t i;
+
+	i = 0;
+	while (array[i] != NULL)
+		i++;
+	return (i);
+}
+
+size_t	ft_strlen(const char *s)
+{
+	int i;
+
+	i = 0;
+	while (s[i] != '\0')
+	{
+		i++;
+	}
+	return (i);
 }

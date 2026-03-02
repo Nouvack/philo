@@ -6,127 +6,97 @@
 /*   By: nsantand <nsantand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 16:42:22 by nsantand          #+#    #+#             */
-/*   Updated: 2026/02/27 18:34:25 by nsantand         ###   ########.fr       */
+/*   Updated: 2026/03/02 18:55:52 by nsantand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "philo.h"
 
-
-int j = 0;
-pthread_mutex_t mutel;
-pthread_mutex_t mutel2;
-long get_time_in_ms(void)
+long	get_time_in_ms(void)
 {
-    struct timeval time;
+	struct timeval	time;
 
-    gettimeofday(&time, NULL);
+	gettimeofday(&time, NULL);
 	printf("ESte es el momento de inicio: %ld", time.tv_sec);
-	
-    return (time.tv_sec * 1000L + time.tv_usec / 1000L);
-}
-void *printas(void *str)
-{
-	for(int i=0; i< 100000; i++)
-	{
-		pthread_mutex_lock(&mutel);
-		j++;
-		pthread_mutex_unlock(&mutel);
-	}
-	pthread_mutex_lock(&mutel2);
-	
-	printf("Este es el valor de i: %d\n", j);
-	printf("Este es el valor de str: %s\n", (char* )str);
-	pthread_mutex_unlock(&mutel2);
-	
-	return(NULL);
-}
-t_table create_table(char **nums)
-{
-	t_table table;
-
-	table.number_of_philosophers = ft_atoi(nums[0]);
-	table.time_to_die = ft_atoi(nums[1]);
-	table.time_to_eat = ft_atoi(nums[2]);
-	table.time_to_sleep = ft_atoi(nums[3]);
-	if(ft_arraylen(nums) == 5)
-		table.number_of_timmes_each_philosopher_must_eat = ft_atoi(nums[4]);
-	else if (ft_arraylen(nums) == 4)
-		table.number_of_timmes_each_philosopher_must_eat = -1;
-	return(table);
-	
+	return (time.tv_sec * 1000L + time.tv_usec / 1000L);
 }
 
-void	*create_node(t_philos **lst, int content)
+t_table	*create_table(char **nums)
 {
-	t_philos	*new;
+	t_table	*table;
 
-	new = ft_calloc(1, sizeof(t_philos));
-	if (!new)
+	table = ft_calloc(1, sizeof(t_table));
+	if (!table)
 		return (NULL);
-	new->ids = content;
-	new->next = NULL;
-	place_node(lst, new);
-	return ((void *)0);
+	table->start_time = get_time_in_ms();
+	table->number_of_philosophers = ft_atoi(nums[0]);
+	table->time_to_die = ft_atoi(nums[1]);
+	table->time_to_eat = ft_atoi(nums[2]);
+	table->time_to_sleep = ft_atoi(nums[3]);
+	if (ft_arraylen(nums) == 5)
+		table->number_of_timmes_each_philosopher_must_eat = ft_atoi(nums[4]);
+	else if (ft_arraylen(nums) == 4)
+		table->number_of_timmes_each_philosopher_must_eat = -1;
+	table->forks = create_forks(table);
+	if (!table->forks)
+		return (NULL);
+	table->forks = create_forks(table);
+	return (table);
 }
 
-void	place_node(t_philos **lst, t_philos *new)
+pthread_mutex_t	*create_forks(t_table *table)
 {
-	t_philos	*current;
+	int	i;
 
-	if (lst == NULL || new == NULL)
-		return ;
-	if (*lst == NULL)
+	i = 0;
+	table->forks = ft_calloc(sizeof(pthread_mutex_t *),
+			table->number_of_philosophers);
+	if (!table->forks)
+		return (NULL);
+	while (i != table->number_of_philosophers)
 	{
-		*lst = new;
-		return ;
+		pthread_mutex_init(table->forks, NULL);
+		i++;
 	}
-	current = *lst;
-	while (current->next != NULL)
-		current = current->next;
-	current->next = new;
+	return (table->forks);
 }
 
-
-t_philos *create_philos(int number_philos)
+t_philos	*create_philos(t_table *table)
 {
-	t_philos *philos;
 	int i;
 	
 	i = 0;
-	philos = NULL;
-	while(i != number_philos)
+	table->philos = ft_calloc(table->number_of_philosophers ,sizeof(t_philos *));
+	if(!table->philos)
+		return(NULL);
+	
+	while(i < table->number_of_philosophers)
 	{
-		create_node(&philos, i);
+		table->philos[i].ids = i;
+		table->philos[i].last_meal = get_time_in_ms();
+		table->philos[i].left_fork = &table->forks[i];
+		table->philos[i].left_fork = &table->forks[i];
+		
+		table->philos[i].number_eats = 0;
+		table->philos[i].table = table;
 		i++;
 	}
-	return(philos);
 }
 
-
-void philos_actions()
-
-bool parse_arguments(char **argv)
+bool	begin_program(char **argv)
 {
-	char **nums;
-	t_philos *philos;
-	t_table table;
+	char		**nums;
+	t_philos	*philos;
+	t_table		*table;
 
-	
-    nums = check_number(argv);
-	if(!nums)
-		return(false);
+	nums = check_number(argv);
+	if (!nums)
+		return (false);
 	table = create_table(nums);
-	philos = create_philos(table.number_of_philosophers);
-	t_philos *tmp = philos;
-
-	while (tmp != NULL)
-	{
-		printf("id de los hilos: %d\n", tmp->ids);
-		tmp = tmp->next;
-	}
-
+	if (!table)
+		return (false);
+	philos = create_philos(table);
+	// t_philos *tmp = philos;
 	// pthread_t hilo;
 	// pthread_t hilo2;
 	// size_t i = 0;
@@ -138,16 +108,12 @@ bool parse_arguments(char **argv)
 	// get_time_in_ms();
 	// pthread_mutex_init(&mutel, NULL);
 	// pthread_mutex_init(&mutel2, NULL);
-	
 	// pthread_create(&hilo, NULL, printas, "hola");
 	// pthread_create(&hilo2, NULL, printas, "hola");
 	// //aprender de los mutex
-	
 	// pthread_join(hilo, NULL);
-	
 	// pthread_join(hilo2, NULL);
 	// pthread_mutex_destroy(&mutel);
 	// pthread_mutex_destroy(&mutel2);
-	
-	return(true);
+	return (true);
 }
