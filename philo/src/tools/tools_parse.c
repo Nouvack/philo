@@ -6,7 +6,7 @@
 /*   By: nsantand <nsantand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 16:42:22 by nsantand          #+#    #+#             */
-/*   Updated: 2026/03/02 18:55:52 by nsantand         ###   ########.fr       */
+/*   Updated: 2026/03/03 18:07:48 by nsantand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ t_table	*create_table(char **nums)
 	table->forks = create_forks(table);
 	if (!table->forks)
 		return (NULL);
-	table->forks = create_forks(table);
 	return (table);
 }
 
@@ -49,7 +48,7 @@ pthread_mutex_t	*create_forks(t_table *table)
 	int	i;
 
 	i = 0;
-	table->forks = ft_calloc(sizeof(pthread_mutex_t *),
+	table->forks = ft_calloc(sizeof(pthread_mutex_t),
 			table->number_of_philosophers);
 	if (!table->forks)
 		return (NULL);
@@ -61,32 +60,30 @@ pthread_mutex_t	*create_forks(t_table *table)
 	return (table->forks);
 }
 
-t_philos	*create_philos(t_table *table)
+bool create_philos(t_table *table)
 {
 	int i;
 	
 	i = 0;
-	table->philos = ft_calloc(table->number_of_philosophers ,sizeof(t_philos *));
+	table->philos = ft_calloc(table->number_of_philosophers ,sizeof(t_philos ));
 	if(!table->philos)
-		return(NULL);
-	
+		return(false);
 	while(i < table->number_of_philosophers)
 	{
 		table->philos[i].ids = i;
 		table->philos[i].last_meal = get_time_in_ms();
 		table->philos[i].left_fork = &table->forks[i];
-		table->philos[i].left_fork = &table->forks[i];
-		
+		table->philos[i].right_fork = &table->forks[(i + 1) % table->number_of_philosophers];
 		table->philos[i].number_eats = 0;
 		table->philos[i].table = table;
 		i++;
 	}
+	return(true);
 }
 
 bool	begin_program(char **argv)
 {
 	char		**nums;
-	t_philos	*philos;
 	t_table		*table;
 
 	nums = check_number(argv);
@@ -95,7 +92,8 @@ bool	begin_program(char **argv)
 	table = create_table(nums);
 	if (!table)
 		return (false);
-	philos = create_philos(table);
+	create_philos(table);
+	philo_actions(table);
 	// t_philos *tmp = philos;
 	// pthread_t hilo;
 	// pthread_t hilo2;

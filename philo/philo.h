@@ -6,7 +6,7 @@
 /*   By: nsantand <nsantand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 15:14:20 by nsantand          #+#    #+#             */
-/*   Updated: 2026/03/02 18:47:50 by nsantand         ###   ########.fr       */
+/*   Updated: 2026/03/03 15:01:33 by nsantand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
+typedef struct s_table t_table;  
+
 typedef enum e_state
 {
 	EATING,
@@ -28,6 +30,17 @@ typedef enum e_state
 	SLEEPING,
 	DEAD,
 }					t_state;
+
+typedef struct s_philos
+{
+	int				ids;
+	pthread_t		thread;
+	int				number_eats;
+	long			last_meal;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
+	t_table			*table;
+}					t_philos;
 
 typedef struct s_table
 {
@@ -45,16 +58,6 @@ typedef struct s_table
     t_philos        *philos;
 }					t_table;
 
-typedef struct s_philos
-{
-	int				ids;
-	pthread_t		thread;
-	int				number_eats;
-	long			last_meal;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
-	t_table			*table;
-}					t_philos;
 
 pthread_mutex_t		*create_forks(t_table *table);
 
@@ -81,4 +84,7 @@ size_t				ft_strlcat(char *dst, const char *src, size_t size);
 void				*ft_calloc(size_t nmemb, size_t size);
 void				ft_bzero(void *s, size_t n);
 void				place_node(t_philos **lst, t_philos *new);
-#endif
+void				philo_actions(t_table *table);
+void				*philo_is_eating(void *philo);
+
+# endif
