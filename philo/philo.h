@@ -6,7 +6,7 @@
 /*   By: nsantand <nsantand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 15:14:20 by nsantand          #+#    #+#             */
-/*   Updated: 2026/03/03 15:01:33 by nsantand         ###   ########.fr       */
+/*   Updated: 2026/03/04 19:00:54 by nsantand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_table t_table;
 typedef enum e_state
 {
 	EATING,
+	FORKING,
 	THINKING,
 	SLEEPING,
 	DEAD,
@@ -85,6 +86,12 @@ void				*ft_calloc(size_t nmemb, size_t size);
 void				ft_bzero(void *s, size_t n);
 void				place_node(t_philos **lst, t_philos *new);
 void				philo_actions(t_table *table);
-void				*philo_is_eating(void *philo);
+long	get_time_in_ms(void);
+void *philo_routine(void *arg);
+void	*philo_is_forkin(t_philos *philo);
+void release_forks(t_philos *philo);
+void print_actions(t_philos *philo, int action);
+void philo_is_eating(t_philos *philo);
+void philo_is_sleeping(t_philos *philo);
 
 # endif

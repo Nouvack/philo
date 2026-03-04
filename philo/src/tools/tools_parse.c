@@ -6,7 +6,7 @@
 /*   By: nsantand <nsantand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 16:42:22 by nsantand          #+#    #+#             */
-/*   Updated: 2026/03/03 18:07:48 by nsantand         ###   ########.fr       */
+/*   Updated: 2026/03/04 17:43:45 by nsantand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ long	get_time_in_ms(void)
 	struct timeval	time;
 
 	gettimeofday(&time, NULL);
-	printf("ESte es el momento de inicio: %ld", time.tv_sec);
 	return (time.tv_sec * 1000L + time.tv_usec / 1000L);
 }
 
@@ -40,6 +39,7 @@ t_table	*create_table(char **nums)
 	table->forks = create_forks(table);
 	if (!table->forks)
 		return (NULL);
+	pthread_mutex_init(&table->print_mutex,NULL);
 	return (table);
 }
 
