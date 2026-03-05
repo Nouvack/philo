@@ -6,7 +6,7 @@
 /*   By: nsantand <nsantand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 16:42:22 by nsantand          #+#    #+#             */
-/*   Updated: 2026/03/04 17:43:45 by nsantand         ###   ########.fr       */
+/*   Updated: 2026/03/05 17:38:32 by nsantand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ bool create_philos(t_table *table)
 	while(i < table->number_of_philosophers)
 	{
 		table->philos[i].ids = i;
-		table->philos[i].last_meal = get_time_in_ms();
+		table->philos[i].last_meal = table->start_time;
 		table->philos[i].left_fork = &table->forks[i];
 		table->philos[i].right_fork = &table->forks[(i + 1) % table->number_of_philosophers];
 		table->philos[i].number_eats = 0;
@@ -94,6 +94,7 @@ bool	begin_program(char **argv)
 		return (false);
 	create_philos(table);
 	philo_actions(table);
+	
 	// t_philos *tmp = philos;
 	// pthread_t hilo;
 	// pthread_t hilo2;

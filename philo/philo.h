@@ -6,7 +6,7 @@
 /*   By: nsantand <nsantand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 15:14:20 by nsantand          #+#    #+#             */
-/*   Updated: 2026/03/04 19:00:54 by nsantand         ###   ########.fr       */
+/*   Updated: 2026/03/05 16:01:35 by nsantand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,19 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
+
+# define RED       "\033[1;31m"
+# define YELLOW    "\033[1;33m"
+# define CYAN      "\033[1;36m"
+# define SILVER "\033[1;37m"
+# define PURPLE "\033[1;35m"
+# define DEF_COLOR "\033[0;39m"
+
+# define COLOR_FORK   SILVER  "has taken a fork\n" DEF_COLOR
+# define COLOR_EAT     YELLOW  "is eating\n" DEF_COLOR
+# define COLOR_SLEEP   PURPLE  "is sleeping\n" DEF_COLOR
+# define COLOR_THINK    CYAN  "is thinking\n" DEF_COLOR
+# define COLOR_DEAD	 RED    "died\n" DEF_COLOR
 typedef struct s_table t_table;  
 
 typedef enum e_state
@@ -93,5 +106,6 @@ void release_forks(t_philos *philo);
 void print_actions(t_philos *philo, int action);
 void philo_is_eating(t_philos *philo);
 void philo_is_sleeping(t_philos *philo);
+void philo_is_thinking(t_philos *philo);
 
 # endif
