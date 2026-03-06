@@ -6,7 +6,7 @@
 /*   By: nsantand <nsantand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 16:42:22 by nsantand          #+#    #+#             */
-/*   Updated: 2026/03/05 17:38:32 by nsantand         ###   ########.fr       */
+/*   Updated: 2026/03/06 18:41:47 by nsantand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ t_table	*create_table(char **nums)
 	table->time_to_die = ft_atoi(nums[1]);
 	table->time_to_eat = ft_atoi(nums[2]);
 	table->time_to_sleep = ft_atoi(nums[3]);
+	pthread_mutex_init(&table->print_mutex,NULL);
+	pthread_mutex_init(&table->meal_mutex,NULL);
+	pthread_mutex_init(&table->dead_mutex,NULL);
+	table->stop = false;
 	if (ft_arraylen(nums) == 5)
 		table->number_of_timmes_each_philosopher_must_eat = ft_atoi(nums[4]);
 	else if (ft_arraylen(nums) == 4)
@@ -39,7 +43,7 @@ t_table	*create_table(char **nums)
 	table->forks = create_forks(table);
 	if (!table->forks)
 		return (NULL);
-	pthread_mutex_init(&table->print_mutex,NULL);
+		
 	return (table);
 }
 

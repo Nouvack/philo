@@ -6,7 +6,7 @@
 /*   By: nsantand <nsantand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 15:14:20 by nsantand          #+#    #+#             */
-/*   Updated: 2026/03/05 16:01:35 by nsantand         ###   ########.fr       */
+/*   Updated: 2026/03/06 19:07:41 by nsantand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_philos
 
 typedef struct s_table
 {
+	pthread_t		monitor_thread;
 	long			start_time;
 	int				number_of_philosophers;
 	int				time_to_die;
@@ -107,5 +108,6 @@ void print_actions(t_philos *philo, int action);
 void philo_is_eating(t_philos *philo);
 void philo_is_sleeping(t_philos *philo);
 void philo_is_thinking(t_philos *philo);
-
+void *monitor_routine(void *arg);
+void finish_threads(t_table *table);
 # endif
