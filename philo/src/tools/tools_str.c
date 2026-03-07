@@ -15,11 +15,12 @@
 
 #include "philo.h"
 
+
 char	*ft_strdup(const char *s)
 {
-	size_t	i;
-	size_t	len;
-	char	*str;
+	size_t i;
+	size_t len;
+	char *str;
 
 	len = ft_strlen(s);
 	str = malloc(len + 1);
@@ -37,7 +38,7 @@ char	*ft_strdup(const char *s)
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	unsigned int	i;
+	unsigned int i;
 
 	i = 0;
 	if (size == 0)
@@ -55,9 +56,9 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	unsigned int	i;
-	unsigned int	j;
-	char 			*str;
+	unsigned int i;
+	unsigned int j;
+	char *str;
 
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
@@ -71,13 +72,11 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
-
-
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	unsigned int	i;
-	unsigned int	j;
-	size_t			sum;
+	unsigned int i;
+	unsigned int j;
+	size_t sum;
 
 	i = 0;
 	j = 0;
@@ -95,4 +94,20 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	}
 	dst[i + j] = '\0';
 	return (sum);
+}
+
+bool	philo_is_dead(t_philos *philo)
+{
+	pthread_mutex_lock(&philo->table->meal_mutex);
+	if ((get_time_in_ms() - philo->last_meal) > philo->table->time_to_die)
+	{
+		print_actions(philo, DEAD);
+		pthread_mutex_unlock(&philo->table->meal_mutex);
+		pthread_mutex_lock(&philo->table->dead_mutex);
+		philo->table->stop = true;
+		pthread_mutex_unlock(&philo->table->dead_mutex);
+		return (true);
+	}
+	pthread_mutex_unlock(&philo->table->meal_mutex);
+	return (false);
 }
