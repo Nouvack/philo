@@ -15,12 +15,11 @@
 
 #include "philo.h"
 
-
 char	*ft_strdup(const char *s)
 {
-	size_t i;
-	size_t len;
-	char *str;
+	size_t	i;
+	size_t	len;
+	char	*str;
 
 	len = ft_strlen(s);
 	str = malloc(len + 1);
@@ -38,7 +37,7 @@ char	*ft_strdup(const char *s)
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	unsigned int i;
+	unsigned int	i;
 
 	i = 0;
 	if (size == 0)
@@ -56,9 +55,9 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	unsigned int i;
-	unsigned int j;
-	char *str;
+	unsigned int	i;
+	unsigned int	j;
+	char			*str;
 
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
@@ -74,9 +73,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	unsigned int i;
-	unsigned int j;
-	size_t sum;
+	unsigned int	i;
+	unsigned int	j;
+	size_t			sum;
 
 	i = 0;
 	j = 0;

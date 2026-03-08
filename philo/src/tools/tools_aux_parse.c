@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+
 static long	aux_atoll(long long sig)
 {
 	if (sig == -1)
@@ -46,6 +47,7 @@ long	ft_atoll(const char *nptr)
 	}
 	return (sig * res);
 }
+
 int	ft_atoi(const char *nptr)
 {
 	int		i;
@@ -73,7 +75,7 @@ int	ft_atoi(const char *nptr)
 
 size_t	ft_arraylen(char **array)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (array[i] != NULL)
@@ -83,7 +85,7 @@ size_t	ft_arraylen(char **array)
 
 size_t	ft_strlen(const char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i] != '\0')

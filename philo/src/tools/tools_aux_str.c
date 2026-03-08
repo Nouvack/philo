@@ -20,6 +20,7 @@ int	ft_isdigit(int c)
 	}
 	return (0);
 }
+
 void	free_array(char **str)
 {
 	int	i;
@@ -62,6 +63,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	ft_bzero(i, total_size);
 	return (i);
 }
+
 void	ft_bzero(void *s, size_t n)
 {
 	unsigned char	*s2;

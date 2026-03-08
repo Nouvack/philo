@@ -84,10 +84,10 @@ char	*aux_checknumber(char *str, char *argv)
 
 char	**check_long(char *str)
 {
-	int i;
-	int j;
-	long number;
-	char **nums;
+	int		i;
+	int		j;
+	long	number;
+	char	**nums;
 
 	nums = ft_split(str, ' ');
 	free(str);
@@ -95,7 +95,6 @@ char	**check_long(char *str)
 	while (nums[i] != NULL)
 	{
 		number = ft_atoll(nums[i]);
-
 		if (ft_atoll(nums[0]) > 200 || number > INT_MAX || number < 0)
 			return (free_array(nums), NULL);
 		j = i + 1;

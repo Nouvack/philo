@@ -45,13 +45,14 @@ t_table	*create_table(char **nums)
 		return (NULL);
 	return (table);
 }
+
 pthread_mutex_t	*create_forks(t_table *table)
 {
 	int	i;
 
 	i = 0;
-	table->forks = ft_calloc(sizeof(pthread_mutex_t),
-			table->number_of_philosophers);
+	table->forks = ft_calloc(table->number_of_philosophers,
+			sizeof(pthread_mutex_t));
 	if (!table->forks)
 		return (NULL);
 	while (i < table->number_of_philosophers)
@@ -88,14 +89,27 @@ bool	begin_program(char **argv)
 {
 	char	**nums;
 	t_table	*table;
+	int		i;
 
+	i = 0;
 	nums = check_number(argv);
 	if (!nums)
 		return (false);
 	table = create_table(nums);
 	if (!table)
-		return (false);
+		return (free(nums), false);
+	free_array(nums);
 	create_philos(table);
 	philo_actions(table);
-	return (true);
+	while (i < table->number_of_philosophers)
+	{
+		pthread_mutex_destroy(&table->forks[i]);
+		i++;
+	}
+	pthread_mutex_destroy(&table->dead_mutex);
+	pthread_mutex_destroy(&table->meal_mutex);
+	pthread_mutex_destroy(&table->print_mutex);
+	free(table->forks);
+	free(table->philos);
+	return (free(table), true);
 }

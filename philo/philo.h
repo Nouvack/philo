@@ -22,18 +22,19 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-# define RED "\033[1;31m"
-# define YELLOW "\033[1;33m"
-# define CYAN "\033[1;36m"
-# define SILVER "\033[1;37m"
-# define PURPLE "\033[1;35m"
-# define DEF_COLOR "\033[0;39m"
+# define RED "\033[0;31m"
+# define YELLOW "\033[0;33m"
+# define PURPLE "\033[0;35m"
+# define CYAN "\033[0;36m"
+# define SILVER "\033[0;37m"
+# define DEF_COLOR "\033[0m"
 
-# define COLOR_FORK SILVER "has taken a fork\n" DEF_COLOR
-# define COLOR_EAT YELLOW "is eating\n" DEF_COLOR
-# define COLOR_SLEEP PURPLE "is sleeping\n" DEF_COLOR
-# define COLOR_THINK CYAN "is thinking\n" DEF_COLOR
-# define COLOR_DEAD RED "died\n" DEF_COLOR
+# define MSG_FORK "has taken a fork\n"
+# define MSG_EAT "is eating\n"
+# define MSG_SLEEP "is sleeping\n"
+# define MSG_THINK "is thinking\n"
+# define MSG_DEAD "died\n"
+
 typedef struct s_table	t_table;
 
 typedef enum e_state
@@ -110,6 +111,8 @@ void					*philo_is_thinking(t_philos *philo);
 void					*monitor_routine(void *arg);
 void					finish_threads(t_table *table);
 bool					check_stop(t_table *table);
-void	ft_usleep(unsigned time, t_table *table);
-bool	philo_is_dead(t_philos *philo);
+void					ft_usleep(unsigned time, t_table *table);
+bool					philo_is_dead(t_philos *philo);
+void					destroy_all(t_table *table);
+
 #endif

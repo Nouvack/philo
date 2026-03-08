@@ -11,36 +11,36 @@
 /* ************************************************************************** */
 
 #include "philo.h"
-void *philos_is_full(t_table *table)
+
+void	*philos_is_full(t_table *table)
 {
-	int i;
-	int philos_full;
+	int	i;
+	int	philos_full;
 
 	i = 0;
 	philos_full = 0;
-	if(table->number_of_timmes_each_philosopher_must_eat != -1)
+	if (table->number_of_timmes_each_philosopher_must_eat != -1)
 	{
-		while(i < table->number_of_philosophers)
+		while (i < table->number_of_philosophers)
 		{
 			pthread_mutex_lock(&table->meal_mutex);
-			
-			if(table->philos[i].number_eats >= table->number_of_timmes_each_philosopher_must_eat)
+			if (table->philos[i].number_eats
+				>= table->number_of_timmes_each_philosopher_must_eat)
 				philos_full++;
 			pthread_mutex_unlock(&table->meal_mutex);
-				
 			i++;
 		}
-		if(philos_full == table->number_of_philosophers)
+		if (philos_full == table->number_of_philosophers)
 		{
 			pthread_mutex_lock(&table->dead_mutex);
 			table->stop = true;
 			pthread_mutex_unlock(&table->dead_mutex);
-			return(NULL);
+			return (NULL);
 		}
 	}
-	return((void* )1);
-	
+	return ((void *)1);
 }
+
 void	*monitor_routine(void *arg)
 {
 	t_table	*table;
@@ -62,6 +62,7 @@ void	*monitor_routine(void *arg)
 	}
 	return (NULL);
 }
+
 void	*philo_routine(void *arg)
 {
 	t_philos	*philo;
