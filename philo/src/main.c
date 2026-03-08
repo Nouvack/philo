@@ -19,13 +19,13 @@ void	*philos_is_full(t_table *table)
 
 	i = 0;
 	philos_full = 0;
-	if (table->number_of_timmes_each_philosopher_must_eat != -1)
+	if (table->number_of_times_each_philosopher_must_eat != -1)
 	{
 		while (i < table->number_of_philosophers)
 		{
 			pthread_mutex_lock(&table->meal_mutex);
 			if (table->philos[i].number_eats
-				>= table->number_of_timmes_each_philosopher_must_eat)
+				>= table->number_of_times_each_philosopher_must_eat)
 				philos_full++;
 			pthread_mutex_unlock(&table->meal_mutex);
 			i++;
@@ -87,12 +87,12 @@ int	main(int argc, char **argv)
 {
 	if (argc < 5 || argc > 6)
 	{
-		printf("hola");
+		printf("ERROR\n");
 		return (1);
 	}
 	if (!begin_program(argv))
 	{
-		printf("ERROR");
+		printf("ERROR\n");
 		return (1);
 	}
 	return (0);

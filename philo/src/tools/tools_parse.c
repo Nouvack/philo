@@ -37,9 +37,9 @@ t_table	*create_table(char **nums)
 	pthread_mutex_init(&table->dead_mutex, NULL);
 	table->stop = false;
 	if (ft_arraylen(nums) == 5)
-		table->number_of_timmes_each_philosopher_must_eat = ft_atoi(nums[4]);
+		table->number_of_times_each_philosopher_must_eat = ft_atoi(nums[4]);
 	else if (ft_arraylen(nums) == 4)
-		table->number_of_timmes_each_philosopher_must_eat = -1;
+		table->number_of_times_each_philosopher_must_eat = -1;
 	table->forks = create_forks(table);
 	if (!table->forks)
 		return (NULL);

@@ -65,7 +65,7 @@ typedef struct s_table
 	int					time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;
-	int					number_of_timmes_each_philosopher_must_eat;
+	int					number_of_times_each_philosopher_must_eat;
 	bool				stop;
 	pthread_mutex_t		dead_mutex;
 	pthread_mutex_t		meal_mutex;
@@ -75,7 +75,6 @@ typedef struct s_table
 }						t_table;
 
 pthread_mutex_t			*create_forks(t_table *table);
-
 bool					begin_program(char **argv);
 bool					aux_exit_check_number(char **argv, int i, int j);
 char					*ft_strdup(const char *s);
