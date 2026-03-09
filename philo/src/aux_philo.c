@@ -102,9 +102,6 @@ void	philo_actions(t_table *table)
 	}
 	if (pthread_create(&table->monitor_thread, NULL, monitor_routine,
 			table) != 0)
-	{
-		finish_threads(table);
-		return ;
-	}
+		return (finish_threads(table));
 	finish_threads(table);
 }
