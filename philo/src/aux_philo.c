@@ -90,6 +90,7 @@ void	philo_actions(t_table *table)
 		print_actions(table->philos, FORKING);
 		ft_usleep(table->time_to_die, table);
 		print_actions(table->philos, DEAD);
+		pthread_mutex_unlock(table->philos->left_fork);
 		return ;
 	}
 	while (i < table->number_of_philosophers)

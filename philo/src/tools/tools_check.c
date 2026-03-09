@@ -95,7 +95,7 @@ char	**check_long(char *str)
 	while (nums[i] != NULL)
 	{
 		number = ft_atoll(nums[i]);
-		if (ft_atoll(nums[0]) > 200 || number > INT_MAX || number < 0)
+		if (ft_atoll(nums[0]) > 200 || number > INT_MAX || number <= 0)
 			return (free_array(nums), NULL);
 		j = i + 1;
 		i++;

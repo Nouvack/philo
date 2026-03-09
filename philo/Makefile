@@ -18,7 +18,7 @@ DEF_COLOR = \033[0;39m
 
 NAME    := philo
 CC      := cc 
-CFLAGS  := -g3 #-Wall -Wextra -Werror 
+CFLAGS  := -Wall -Wextra -Werror 
 SRC_DIR := src/
 SRC := $(SRC_DIR)main.c $(SRC_DIR)tools/tools_str.c $(SRC_DIR)aux_philo.c \
 		$(SRC_DIR)tools/tools_split.c  $(SRC_DIR)tools/tools_parse.c $(SRC_DIR)tools/tools_check.c \
